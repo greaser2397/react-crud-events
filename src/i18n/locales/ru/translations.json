@@ -1,0 +1,28 @@
+{
+  "labels": {
+    "navigation": {
+      "item": {
+        "events": "Events"
+      },
+      "button": {
+        "login": "Login",
+        "register": "Register"
+      }
+    },
+    "form": {
+      "title": "Create New Event",
+      "field": {
+        "title": "Event title",
+        "category": "Category",
+        "description": "Description",
+        "city": "City",
+        "venue": "Venue",
+        "date": "Date"
+      },
+      "button": {
+        "cancel": "Cancel",
+        "submit": "Submit"
+      }
+    }
+  }
+}
