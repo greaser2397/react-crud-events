@@ -1,7 +1,7 @@
 import { Container, Menu, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
-function NavBar({ formOpen, setFormOpen }) {
+function NavBar({ formOpen, formState, setFormOpen }) {
   const { t } = useTranslation();
 
   return (
@@ -13,7 +13,7 @@ function NavBar({ formOpen, setFormOpen }) {
         </Menu.Item>
         <Menu.Item name={ t('navigation.item.events') }/>
         <Menu.Item>
-          <Button positive inverted disabled={ formOpen }
+          <Button positive inverted disabled={ formOpen && formState === 'create' }
                   content={ t('navigation.button.createEvent') } onClick={ () => setFormOpen(true) }/>
         </Menu.Item>
         <Menu.Item position='right'>

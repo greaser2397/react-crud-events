@@ -10,7 +10,10 @@
     }
   },
   "form": {
-    "title": "Create New Event",
+    "title": {
+      "create": "Create New Event",
+      "edit": "Edit Event"
+    },
     "field": {
       "title": "Event title",
       "category": "Category",
@@ -21,13 +24,16 @@
     },
     "button": {
       "cancel": "Cancel",
-      "submit": "Submit"
+      "submit": "Submit",
+      "update": "Update"
     }
   },
   "event": {
     "hostedBy": "Hosted by",
     "button": {
-      "view": "View"
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
     }
   }
 }

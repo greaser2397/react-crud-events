@@ -3,7 +3,7 @@ import { Icon, Item, List, Segment, Button } from 'semantic-ui-react';
 import EventListAttendee from './EventListAttendee';
 import { useTranslation } from 'react-i18next';
 
-function EventListItem({ event }) {
+function EventListItem({ event, selectEvent, deleteEvent }) {
   const { t } = useTranslation();
 
   return (
@@ -32,7 +32,18 @@ function EventListItem({ event }) {
       </Segment>
       <Segment clearing>
         <div>{ event.description }</div>
-        <Button color='teal' floated='right' content='View'/>
+        <Button
+          floated='right'
+          color='red'
+          content={ t('event.button.delete') }
+          onClick={ () => deleteEvent(event.id) }
+        />
+        <Button
+          floated='right'
+          color='blue'
+          content={ t('event.button.view') }
+          onClick={ () => selectEvent(event) }
+        />
       </Segment>
     </Segment.Group>
   )
