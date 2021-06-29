@@ -2,6 +2,7 @@ import React from 'react';
 import { Icon, Item, List, Segment, Button } from 'semantic-ui-react';
 import EventListAttendee from './EventListAttendee';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 function EventListItem({ event, selectEvent, deleteEvent }) {
   const { t } = useTranslation();
@@ -42,7 +43,7 @@ function EventListItem({ event, selectEvent, deleteEvent }) {
           floated='right'
           color='blue'
           content={ t('event.button.view') }
-          onClick={ () => selectEvent(event) }
+          as={ Link } to={ `/events/${ event.id }` }
         />
       </Segment>
     </Segment.Group>

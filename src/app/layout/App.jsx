@@ -1,46 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dashboard from '../framework/pages/Dashboard';
-import NavBar from '../framework/components/NavBar';
+import NavBar from '../framework/components/nav/NavBar';
 import { Container } from 'semantic-ui-react';
 import Footer from '../framework/components/Footer';
+import { Route } from 'react-router-dom';
+import HomePage from '../framework/pages/HomePage';
+import EventDetailView from '../framework/pages/EventDetailView';
+import EventForm from '../framework/forms/EventForm';
 
 function App() {
-  const [formOpen, setFormOpen] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [formState, setFormState] = useState(null);
-
-  function handleSelectEvent(event) {
-    setSelectedEvent(event);
-    setFormState('edit');
-    setFormOpen(true);
-  }
-
-  function handleCreateFormOpen() {
-    setSelectedEvent(null);
-    setFormState('create');
-    setFormOpen(true);
-  }
-
   return (
     <>
-      <NavBar
-        formOpen={ formOpen }
-        formState={ formState }
-        setFormOpen={ handleCreateFormOpen }
-      />
-      <Container className='main'>
-        <Dashboard
-          formOpen={ formOpen }
-          setFormOpen={ setFormOpen }
-          selectEvent={ handleSelectEvent }
-          selectedEvent={ selectedEvent }
-          formState={ formState }
-          setFormState={ setFormState }
-        />
-      </Container>
-      <Footer/>
+      <Route exact path='/' component={ HomePage }/>
+      <Route path={ '/(.+)' } render={ () => (
+        <>
+          <NavBar/>
+          <Container className='main'>
+            <Route exact path='/events' component={ Dashboard }/>
+            <Route path='/events/:id' component={ EventDetailView }/>
+            <Route path={ ['/createEvent', '/manage/:id'] } component={ EventForm }/>
+          </Container>
+          <Footer/>
+        </>
+      ) }/>
     </>
   );
 }
 
+
 export default App;
+
+// <Dashboard
+//   formOpen={ formOpen }
+//   setFormOpen={ setFormOpen }
+//   selectEvent={ handleSelectEvent }
+//   selectedEvent={ selectedEvent }
+//   formState={ formState }
+//   setFormState={ setFormState }
+// />

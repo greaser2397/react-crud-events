@@ -7,10 +7,11 @@ function Footer() {
   const [lang, setLang] = useState('en');
 
   function changeLanguage(e) {
-    i18n.changeLanguage(e.target.value);
-    setLang(e.target.value);
-    document.querySelector('.lang-switcher .button.active').classList.remove('active');
-    document.querySelector(`.lang-switcher .button[value="${ e.target.value }"]`).classList.add('active');
+    const btn = e.target;
+    i18n.changeLanguage(btn.value);
+    setLang(btn.value);
+    btn.parentNode.querySelector(`[value="${ lang }"]`).classList.remove('active');
+    btn.parentNode.querySelector(`[value="${ btn.value }"]`).classList.add('active');
   }
 
   return (
@@ -18,9 +19,9 @@ function Footer() {
       <Container>
         <Menu.Item position='right'>
           <Button.Group className='lang-switcher' size='small' basic compact inverted color='olive'>
-            <Button className='active' content={ 'English' } value='en' onClick={ changeLanguage }/>
+            <Button className='active' content={ 'EN' } value='en' onClick={ changeLanguage }/>
             <Button.Or/>
-            <Button content={ 'Russian' } value='ru' onClick={ changeLanguage }/>
+            <Button content={ 'RU' } value='ru' onClick={ changeLanguage }/>
           </Button.Group>
         </Menu.Item>
       </Container>

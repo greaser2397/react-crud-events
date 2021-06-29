@@ -1,7 +1,9 @@
 {
   "navigation": {
     "item": {
-      "events": "Events"
+      "events": "Events",
+      "profile": "My Profile",
+      "signOut": "Sign Out"
     },
     "button": {
       "login": "Login",

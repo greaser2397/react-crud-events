@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Header, Segment, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import cuid from 'cuid';
+import { Link } from 'react-router-dom';
 
 function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, formState, setFormState, updateEvent }) {
   const { t } = useTranslation();
@@ -74,7 +75,8 @@ function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, formSta
           type='submit'
           floated='right'
           content={ t('form.button.cancel') }
-          onClick={ () => setFormOpen(false) }
+          as={ Link }
+          to='/events'
         />
       </Form>
     </Segment>
