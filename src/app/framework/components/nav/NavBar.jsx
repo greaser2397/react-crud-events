@@ -23,6 +23,7 @@ function NavBar() {
           React Events
         </Menu.Item>
         <Menu.Item as={ NavLink } exact to='/events' name={ t('navigation.item.events') }/>
+        <Menu.Item as={ NavLink } exact to='/sandbox' name='Sandbox'/>
         { authenticated &&
         <Menu.Item as={ NavLink } to='/createEvent'>
           <Button positive inverted content={ t('navigation.button.createEvent') }/>

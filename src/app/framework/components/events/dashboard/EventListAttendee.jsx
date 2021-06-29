@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, List } from 'semantic-ui-react';
 
-function EventAttendee({ attendee }) {
+function EventListAttendee({ attendee }) {
   return (
     <List.Item>
       <Image size='mini' circular src={ attendee.photoURL || '/assets/user.png' } alt={ attendee.name }/>
@@ -9,4 +9,4 @@ function EventAttendee({ attendee }) {
   )
 }
 
-export default EventAttendee;
+export default EventListAttendee;

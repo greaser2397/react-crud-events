@@ -3,9 +3,14 @@ import { Form, Header, Segment, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import cuid from 'cuid';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { createEvent, updateEvent } from '../components/events/eventActions';
 
-function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, formState, setFormState, updateEvent }) {
+function EventForm({ match, history }) {
   const { t } = useTranslation();
+
+  const dispatch = useDispatch();
+  const selectedEvent = useSelector(state => state.event.events.find(e => e.id === match.params.id));
 
   const defaultValues = selectedEvent || {
     title: '',
@@ -19,17 +24,16 @@ function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, formSta
   const [values, setValues] = useState(defaultValues);
 
   function handleFormSubmit() {
-    formState === 'edit'
-      ? updateEvent({ ...selectedEvent, ...values })
-      : createEvent({
+    selectedEvent
+      ? dispatch(updateEvent({ ...selectedEvent, ...values }))
+      : dispatch(createEvent({
         ...values,
         id: cuid(),
         hostedBy: 'Bob',
         attendees: [],
         hostPhotoURL: '/assets/user.png'
-      });
-    setFormState(null);
-    setFormOpen(false);
+      }));
+    history.push('/events')
   }
 
   function handleInputChange(e) {
@@ -39,7 +43,7 @@ function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, formSta
 
   return (
     <Segment clearing>
-      <Header content={ t(`form.title.${ formState }`) }/>
+      <Header content={ t(`form.title.create`) }/>
       <Form onSubmit={ handleFormSubmit }>
         <Form.Field>
           <input type="text" name='title' value={ values.title } placeholder={ t('form.field.title') }
@@ -69,7 +73,7 @@ function EventForm({ setFormOpen, setEvents, createEvent, selectedEvent, formSta
           positive
           type='submit'
           floated='right'
-          content={ t(`form.button.${ formState === 'edit' ? 'update' : 'submit' }`) }
+          content={ t(`form.button.submit`) }
         />
         <Button
           type='submit'

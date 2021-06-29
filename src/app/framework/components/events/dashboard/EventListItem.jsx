@@ -3,8 +3,9 @@ import { Icon, Item, List, Segment, Button } from 'semantic-ui-react';
 import EventListAttendee from './EventListAttendee';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import { deleteEvent } from '../eventActions';
 
-function EventListItem({ event, selectEvent, deleteEvent }) {
+function EventListItem({ event }) {
   const { t } = useTranslation();
 
   return (
