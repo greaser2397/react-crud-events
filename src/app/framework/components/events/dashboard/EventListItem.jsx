@@ -4,6 +4,7 @@ import EventListAttendee from './EventListAttendee';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { deleteEvent } from '../eventActions';
+import { format } from 'date-fns';
 
 function EventListItem({ event }) {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ function EventListItem({ event }) {
       </Segment>
       <Segment>
         <span>
-          <Icon name='clock'/> { event.date }
+          <Icon name='clock'/> { format(event.date, 'MMMM d, yyyy h:mm a') }
           <Icon name='marker'/> { event.venue }
         </span>
       </Segment>

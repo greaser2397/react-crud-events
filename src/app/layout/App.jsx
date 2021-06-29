@@ -8,12 +8,14 @@ import HomePage from '../framework/pages/HomePage';
 import EventDetailView from '../framework/pages/EventDetailView';
 import EventForm from '../framework/forms/EventForm';
 import Sandbox from '../framework/sandbox/Sandbox';
+import ModalManager from '../framework/modals/ModalManager';
 
 function App() {
   const { key } = useLocation();
 
   return (
     <>
+      <ModalManager/>
       <Route exact path='/' component={ HomePage }/>
       <Route path={ '/(.+)' } render={ () => (
         <>

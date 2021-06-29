@@ -1,14 +1,20 @@
 import React from 'react';
 import { useField } from 'formik';
-import { FormField, Label } from 'semantic-ui-react';
+import { FormField, Label, Select } from 'semantic-ui-react';
 
-export default function TextInput({ label, ...props }) {
-  const [field, meta] = useField(props);
+export default function SelectInput({ label, ...props }) {
+  const [field, meta, helpers] = useField(props);
 
   return (
     <FormField error={ meta.touched && !!meta.error }>
       <label>{ label }</label>
-      <input { ...field }{ ...props }/>
+      <Select
+        clearable
+        value={ field.value }
+        onChange={ (e, d) => helpers.setValue(d.value) }
+        onBlur={ () => helpers.setTouched(true) }
+        { ...props }
+      />
       { meta.touched && meta.error ? (
         <Label basic color='red'>{ meta.error }</Label>
       ) : null }

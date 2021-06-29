@@ -1,8 +1,11 @@
 import { Menu, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../modals/modalReducer';
 
-function SignedOutMenu({ setAuthenticated }) {
+function SignedOutMenu() {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   return (
     <Menu.Item position='right'>
@@ -11,7 +14,7 @@ function SignedOutMenu({ setAuthenticated }) {
         basic
         inverted
         content={ t('navigation.button.login') }
-        onClick={ () => setAuthenticated(true) }
+        onClick={ () => dispatch(openModal({ modalType: 'LoginForm' })) }
       />
       <Button className='register' basic inverted content={ t('navigation.button.register') }/>
     </Menu.Item>
