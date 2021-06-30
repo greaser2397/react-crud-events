@@ -1,8 +1,8 @@
+/* global google */
 import React from 'react';
 import { Header, Segment, Button } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import cuid from 'cuid';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createEvent, updateEvent } from '../components/events/eventActions';
 import { Formik, Form } from 'formik';
@@ -12,6 +12,7 @@ import TextArea from '../components/forms/TextArea';
 import SelectInput from '../components/forms/SelectInput';
 import { categoryData } from '../../api/categoryOptions';
 import DateInput from '../components/forms/DateInput';
+import PlaceInput from '../components/forms/PlaceInput';
 
 function EventForm({ match, history }) {
   const { t } = useTranslation();
@@ -23,8 +24,14 @@ function EventForm({ match, history }) {
     title: '',
     category: '',
     description: '',
-    city: '',
-    venue: '',
+    city: {
+      address: '',
+      latLng: ''
+    },
+    venue: {
+      address: '',
+      latLng: ''
+    },
     date: ''
   };
 
@@ -32,8 +39,8 @@ function EventForm({ match, history }) {
     title: Yup.string().required('You must provide a title'),
     category: Yup.string().required('You must provide a category'),
     description: Yup.string().required(),
-    city: Yup.string().required(),
-    venue: Yup.string().required(),
+    city: Yup.object().shape({ address: Yup.string().required('City is required'), }),
+    venue: Yup.object().shape({ address: Yup.string().required('Venue is required'), }),
     date: Yup.string().required(),
   });
 
@@ -55,15 +62,24 @@ function EventForm({ match, history }) {
           history.push('/events')
         } }
       >
-        { ({ isSubmitting, dirty, isValid }) => (
+        { ({ isSubmitting, dirty, isValid, values }) => (
           <Form className='ui form'>
             <Header sub color='teal' content='Event Details'/>
             <TextInput name='title' placeholder={ t('form.field.title') }/>
             <SelectInput name='category' placeholder={ t('form.field.category') } options={ categoryData }/>
-            <TextArea name='description' placeholder={ t('form.field.description') }/>
+            <TextArea name='description' placeholder={ t('form.field.description') } rows={ 4 }/>
             <Header sub color='teal' content='Event Location Details'/>
-            <TextInput name='city' placeholder={ t('form.field.city') }/>
-            <TextInput name='venue' placeholder={ t('form.field.venue') }/>
+            <PlaceInput name='city' placeholder={ t('form.field.city') }/>
+            <PlaceInput
+              name='venue'
+              placeholder={ t('form.field.venue') }
+              disabled={ !values.city.latLng }
+              options={ {
+                location: new google.maps.LatLng(values.city.latLng),
+                radius: 1000,
+                types: ['establishment']
+              } }
+            />
             <DateInput
               name='date'
               placeholderText={ t('form.field.date') }
