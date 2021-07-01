@@ -1,10 +1,10 @@
 import React from 'react';
-import { Dimmer } from 'semantic-ui-react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
-export default function Loader({ inverted = true, content = 'Loading...' }) {
+export default function AsyncLoader({ inverted = true, content = 'Loading...' }) {
   return (
-    <Dimmer inverted={ inverted } active={true}>
-
+    <Dimmer inverted={ inverted } active={ true }>
+      <Loader content={ content }/>
     </Dimmer>
   )
 }

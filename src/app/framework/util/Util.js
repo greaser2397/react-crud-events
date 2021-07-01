@@ -1,1 +1,3 @@
-import _ from 'lodash';
+export function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

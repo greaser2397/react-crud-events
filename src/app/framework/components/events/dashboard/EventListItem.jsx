@@ -43,7 +43,7 @@ function EventListItem({ event }) {
         />
         <Button
           floated='right'
-          color='blue'
+          color='teal'
           content={ t('event.button.view') }
           as={ Link } to={ `/events/${ event.id }` }
         />
