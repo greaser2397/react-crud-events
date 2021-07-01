@@ -11,21 +11,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from './app/store/configureStore';
 import ScrollToTop from './app/layout/ScrollToTop';
-import { loadEvents } from './app/framework/components/events/eventActions';
 
 const store = configureStore();
-store.dispatch(loadEvents());
-
+// <React.StrictMode>
+// </React.StrictMode>
 const render = function () {
   ReactDOM.render(
-    <React.StrictMode>
       <Provider store={ store }>
         <BrowserRouter>
           <ScrollToTop/>
           <App/>
         </BrowserRouter>
-      </Provider>
-    </React.StrictMode>,
+      </Provider>,
     document.getElementById('root')
   );
 };
