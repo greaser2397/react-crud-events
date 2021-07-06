@@ -14,6 +14,7 @@ import ErrorComponent from '../framework/errors/ErrorComponent';
 import AccountPage from '../framework/pages/AccountPage';
 import { useSelector } from 'react-redux';
 import AsyncLoader from './AsyncLoader';
+import ProfilePage from '../framework/pages/ProfilePage';
 
 function App() {
   const { key } = useLocation();
@@ -35,6 +36,7 @@ function App() {
             <Route path='/events/:id' component={ EventDetailView } />
             <Route path={ ['/createEvent', '/manage/:id'] } component={ EventForm } key={ key } />
             <Route path='/account' component={ AccountPage } />
+            <Route path='/profile/:id' component={ ProfilePage } />
             <Route path='/error' component={ ErrorComponent } />
           </Container>
           <Footer />
