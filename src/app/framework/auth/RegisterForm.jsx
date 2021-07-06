@@ -3,37 +3,41 @@ import ModalWrapper from '../modals/ModalWrapper';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import TextInput from '../components/forms/TextInput';
-import { Button } from 'semantic-ui-react';
+import { Button, Divider, Label } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
 import { closeModal } from '../modals/modalReducer';
-import { signInWithEmail } from '../../firestore/firebaseService';
+import { registerInFirebase } from '../../firestore/firebaseService';
+import SocialLogin from './SocialLogin';
 
-export default function LoginForm() {
+export default function RegisterForm() {
   const dispatch = useDispatch();
 
   return (
-    <ModalWrapper size='mini' header='Sign in to React Events'>
+    <ModalWrapper size='mini' header='Register to React Events'>
       <Formik
-        initialValues={ { email: '', password: '' } }
+        initialValues={ { displayName: '', email: '', password: '' } }
         validationSchema={ Yup.object({
+          displayName: Yup.string().required(),
           email: Yup.string().required().email(),
           password: Yup.string().required()
         }) }
-        onSubmit={ async (values, { setSubmitting }) => {
+        onSubmit={ async (values, { setSubmitting, setErrors }) => {
           try {
-            await signInWithEmail(values);
+            await registerInFirebase(values);
             setSubmitting(false);
             dispatch(closeModal());
           } catch (error) {
+            setErrors({ auth: error.message });
             setSubmitting(false);
-            console.log(error)
           }
         } }
       >
-        { ({ isSubmitting, dirty, isValid }) => (
+        { ({ isSubmitting, dirty, isValid, errors }) => (
           <Form className='ui form'>
+            <TextInput name='displayName' placeholder='Display Name' />
             <TextInput name='email' placeholder='Email Address' />
             <TextInput name='password' type='password' placeholder='Password' />
+            { errors.auth && <Label basic color='red' style={ { marginBottom: 10 } } content={ errors.auth } /> }
             <Button
               fluid
               loading={ isSubmitting }
@@ -43,6 +47,8 @@ export default function LoginForm() {
               color='teal'
               content='Login'
             />
+            <Divider horizontal>Or</Divider>
+            <SocialLogin />
           </Form>
         ) }
       </Formik>

@@ -3,10 +3,11 @@ import ModalWrapper from '../modals/ModalWrapper';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import TextInput from '../components/forms/TextInput';
-import { Button } from 'semantic-ui-react';
+import { Button, Divider, Label } from 'semantic-ui-react';
 import { useDispatch } from 'react-redux';
-import { signInUser } from './authActions';
 import { closeModal } from '../modals/modalReducer';
+import { signInWithEmail } from '../../firestore/firebaseService';
+import SocialLogin from './SocialLogin';
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -19,16 +20,22 @@ export default function LoginForm() {
           email: Yup.string().required().email(),
           password: Yup.string().required()
         }) }
-        onSubmit={ (values, { setSubmitting }) => {
-          dispatch(signInUser(values));
-          setSubmitting(false);
-          dispatch(closeModal());
+        onSubmit={ async (values, { setSubmitting, setErrors }) => {
+          try {
+            await signInWithEmail(values);
+            setSubmitting(false);
+            dispatch(closeModal());
+          } catch (error) {
+            setSubmitting(false);
+            setErrors({ auth: error.message || 'Problem with username or password' });
+          }
         } }
       >
-        { ({ isSubmitting, dirty, isValid }) => (
+        { ({ isSubmitting, dirty, isValid, errors }) => (
           <Form className='ui form'>
-            <TextInput name='email' placeholder='Email Address'/>
-            <TextInput name='password' type='password' placeholder='Password'/>
+            <TextInput name='email' placeholder='Email Address' />
+            <TextInput name='password' type='password' placeholder='Password' />
+            { errors.auth && <Label basic color='red' style={ { marginBottom: 10 } } content={ errors.auth } /> }
             <Button
               fluid
               loading={ isSubmitting }
@@ -38,6 +45,8 @@ export default function LoginForm() {
               color='teal'
               content='Login'
             />
+            <Divider horizontal>Or</Divider>
+            <SocialLogin />
           </Form>
         ) }
       </Formik>

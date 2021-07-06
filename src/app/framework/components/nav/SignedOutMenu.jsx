@@ -16,7 +16,13 @@ function SignedOutMenu() {
         content={ t('navigation.button.login') }
         onClick={ () => dispatch(openModal({ modalType: 'LoginForm' })) }
       />
-      <Button className='register' basic inverted content={ t('navigation.button.register') }/>
+      <Button
+        className='register'
+        basic
+        inverted
+        content={ t('navigation.button.register') }
+        onClick={ () => dispatch(openModal({ modalType: 'RegisterForm' })) }
+      />
     </Menu.Item>
   )
 }
