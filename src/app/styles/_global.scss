@@ -9,6 +9,17 @@ body {
       padding-bottom: 2rem;
     }
   }
+
+  .card {
+    div.image {
+      min-height: 150px;
+
+      img {
+        height: 100% !important;
+        object-fit: cover;
+      }
+    }
+  }
 }
 
 .react-datepicker-wrapper {
