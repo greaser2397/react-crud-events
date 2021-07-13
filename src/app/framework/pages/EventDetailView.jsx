@@ -13,8 +13,11 @@ import AsyncLoader from '../../layout/AsyncLoader';
 
 function EventDetailView({ match }) {
   const event = useSelector(state => state.event.events.find(e => e.id === match.params.id));
+  const { currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
   const { loading, error } = useSelector(state => state.async);
+  const isHost = event?.hostUid === currentUser.uid;
+  const isGoing = event?.attendees?.some(a => a.id === currentUser.uid);
 
   useFirestoreDoc({
     query: () => listenToEventFromFirestore(match.params.id),
@@ -28,12 +31,12 @@ function EventDetailView({ match }) {
   return (
     <Grid className='eventDetailView'>
       <Grid.Column width={ 10 }>
-        <EventHeader event={ event } />
+        <EventHeader event={ event } isGoing={ isGoing } isHost={ isHost } />
         <EventInfo event={ event } />
         <EventChat />
       </Grid.Column>
       <Grid.Column width={ 6 }>
-        <EventSidebar attendees={ event.attendees } />
+        <EventSidebar attendees={ event.attendees } hostUid={event.hostUid} />
       </Grid.Column>
     </Grid>
   )

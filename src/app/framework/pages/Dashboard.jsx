@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Grid } from 'semantic-ui-react';
 import EventList from '../components/events/dashboard/EventList';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,26 +13,43 @@ function Dashboard() {
   const dispatch = useDispatch();
   const { events } = useSelector(state => state.event);
   const { loading } = useSelector(state => state.async);
+  const { currentUser } = useSelector(state => state.auth);
+  const [predicate, setPredicate] = useState(new Map([
+    ['startDate', new Date()],
+    ['filter', 'all']
+  ]));
+
+  function handleSetPredicate(key, value) {
+    setPredicate(new Map(predicate.set(key, value)));
+  }
 
   useFirestoreCollection({
-    query: () => listenToEventsFromFirestore(),
-    data: evts => dispatch(listenToEvents(evts)),
-    deps: [dispatch]
+    query: () => listenToEventsFromFirestore(predicate),
+    data: (events) => dispatch(listenToEvents(events)),
+    deps: [dispatch, predicate]
   });
 
   return (
     <Grid className='dashboard'>
       <Grid.Column width={ 10 }>
-        { loading &&
-        <>
-          <EventListItemPlaceholder />
-          <EventListItemPlaceholder />
-        </>
+        { loading
+          ? (
+            <>
+              <EventListItemPlaceholder />
+              <EventListItemPlaceholder />
+            </>
+          ) : (
+            <EventList events={ events } />
+          )
         }
-        <EventList events={ events } />
       </Grid.Column>
       <Grid.Column width={ 6 }>
-        <EventFilters />
+        <EventFilters
+          predicate={ predicate }
+          setPredicate={ handleSetPredicate }
+          loading={ loading }
+          currentUser={ currentUser }
+        />
       </Grid.Column>
     </Grid>
   )
