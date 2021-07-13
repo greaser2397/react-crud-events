@@ -33,10 +33,10 @@ function EventDetailView({ match }) {
       <Grid.Column width={ 10 }>
         <EventHeader event={ event } isGoing={ isGoing } isHost={ isHost } />
         <EventInfo event={ event } />
-        <EventChat />
+        <EventChat eventId={ event.id } />
       </Grid.Column>
       <Grid.Column width={ 6 }>
-        <EventSidebar attendees={ event.attendees } hostUid={event.hostUid} />
+        <EventSidebar attendees={ event.attendees } hostUid={ event.hostUid } />
       </Grid.Column>
     </Grid>
   )
