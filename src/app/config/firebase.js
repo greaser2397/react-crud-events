@@ -5,7 +5,7 @@ import 'firebase/auth';
 import 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCSYIiFHA4vWf22o2rRHtmBRE9BfoVfhEk",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "react-crud-events.firebaseapp.com",
   projectId: "react-crud-events",
   storageBucket: "react-crud-events.appspot.com",
