@@ -7,22 +7,22 @@ import './app/layout/styles.scss';
 import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 import './i18n/config';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import configureStore from './app/store/configureStore';
+import configureStore, { history } from './app/store/configureStore';
 import ScrollToTop from './app/layout/ScrollToTop';
+import { ConnectedRouter } from 'connected-react-router';
 
 const store = configureStore();
 // <React.StrictMode>
 // </React.StrictMode>
 const render = function () {
   ReactDOM.render(
-      <Provider store={ store }>
-        <BrowserRouter>
-          <ScrollToTop/>
-          <App/>
-        </BrowserRouter>
-      </Provider>,
+    <Provider store={ store }>
+      <ConnectedRouter history={ history }>
+        <ScrollToTop />
+        <App />
+      </ConnectedRouter>
+    </Provider>,
     document.getElementById('root')
   );
 };
