@@ -4,29 +4,41 @@ import {
   DELETE_EVENT,
   FETCH_EVENTS,
   LISTEN_TO_EVENT_CHAT,
-  LISTEN_TO_SELECTED_EVENT,
+  LISTEN_TO_SELECTED_EVENT, SET_FILTER, SET_START_DATE,
   UPDATE_EVENT
 } from './eventConstants';
 import { asyncActionEnd, asyncActionError, asyncActionStart } from '../../../async/asyncReducer';
 import { dataFromSnapshot, fetchEventsFromFirestore } from '../../../firestore/firestoreService';
 
-export function fetchEvents(predicate, limit, lastDocSnapshot) {
+export function fetchEvents(filter, startDate, limit, lastDocSnapshot) {
   return async function (dispatch) {
     dispatch(asyncActionStart());
     try {
-      const snapshot = await fetchEventsFromFirestore(predicate, limit, lastDocSnapshot).get();
+      const snapshot = await fetchEventsFromFirestore(filter, startDate, limit, lastDocSnapshot).get();
       const lastVisible = snapshot.docs[snapshot.docs.length - 1];
       const moreEvents = snapshot.docs.length >= limit;
       const events = snapshot.docs.map(doc => dataFromSnapshot(doc));
 
-      dispatch({ type: FETCH_EVENTS, payload: { events, moreEvents } });
+      dispatch({ type: FETCH_EVENTS, payload: { events, moreEvents, lastVisible } });
       dispatch(asyncActionEnd());
-
-      return lastVisible;
 
     } catch (error) {
       dispatch(asyncActionError(error));
     }
+  }
+}
+
+export function setFilter(value) {
+  return function (dispatch) {
+    dispatch(clearEvents());
+    dispatch({ type: SET_FILTER, payload: value });
+  }
+}
+
+export function setStartDate(date) {
+  return function (dispatch) {
+    dispatch(clearEvents());
+    dispatch({ type: SET_START_DATE, payload: date });
   }
 }
 

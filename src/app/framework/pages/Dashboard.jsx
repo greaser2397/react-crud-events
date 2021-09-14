@@ -4,46 +4,39 @@ import EventList from '../components/events/dashboard/EventList';
 import { useDispatch, useSelector } from 'react-redux';
 import EventListItemPlaceholder from '../components/events/dashboard/EventListItemPlaceholder';
 import EventFilters from '../components/events/dashboard/EventFilters';
-import { clearEvents, fetchEvents } from '../components/events/eventActions';
+import { fetchEvents } from '../components/events/eventActions';
 import EventsFeed from '../components/events/dashboard/EventsFeed';
+import { RETAIN_STATE } from '../components/events/eventConstants';
 
 
 function Dashboard() {
   const limit = 2;
   const dispatch = useDispatch();
-  const { events, moreEvents } = useSelector(state => state.event);
+  const {
+    events,
+    moreEvents,
+    filter,
+    startDate,
+    lastVisible,
+    retainState
+  } = useSelector(state => state.event);
   const { loading } = useSelector(state => state.async);
   const { currentUser, authenticated } = useSelector(state => state.auth);
-  const [lastDocSnapshot, setLastDocSnapshot] = useState(null);
   const [loadingInitial, setLoadingInitial] = useState(false);
 
-  const [predicate, setPredicate] = useState(new Map([
-    ['startDate', new Date()],
-    ['filter', 'all']
-  ]));
-
-  function handleSetPredicate(key, value) {
-    dispatch(clearEvents());
-    setLastDocSnapshot(null);
-    setPredicate(new Map(predicate.set(key, value)));
-  }
-
   useEffect(() => {
+    if (retainState) return;
+
     setLoadingInitial(true);
-    dispatch(fetchEvents(predicate, limit)).then(lastVisibleDoc => {
-      setLastDocSnapshot(lastVisibleDoc);
-      setLoadingInitial(false);
-    });
+    dispatch(fetchEvents(filter, startDate, limit)).then(() => setLoadingInitial(false));
 
     return () => {
-      dispatch(clearEvents());
+      dispatch({ type: RETAIN_STATE });
     }
-  }, [dispatch, predicate]);
+  }, [dispatch, filter, startDate, retainState]);
 
   function handleFetchNextEvents() {
-    dispatch(fetchEvents(predicate, limit, lastDocSnapshot)).then(lastVisibleDoc => {
-      setLastDocSnapshot(lastVisibleDoc);
-    });
+    dispatch(fetchEvents(filter, startDate, limit, lastVisible));
   }
 
   return (
@@ -70,8 +63,6 @@ function Dashboard() {
           <EventsFeed />
         ) }
         <EventFilters
-          predicate={ predicate }
-          setPredicate={ handleSetPredicate }
           loading={ loading }
           currentUser={ currentUser }
         />
