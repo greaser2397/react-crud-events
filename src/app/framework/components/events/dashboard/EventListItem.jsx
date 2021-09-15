@@ -17,14 +17,16 @@ function EventListItem({ event }) {
             <Item.Content>
               <Item.Header content={ event.title } />
               <Item.Description>
-                <Link to={ `/profile/${ event.hostUid }` }>{ `${ t('event.hostedBy') } ${ event.hostedBy }` }</Link>
+                <Link to={ `/profile/${ event.hostUid }` }>
+                  { `${ t('event.hostedBy', { defaultValue: 'Hosted by' }) } ${ event.hostedBy }` }
+                </Link>
               </Item.Description>
               { event.isCancelled && (
                 <Label
                   style={ { top: '-40px' } }
                   ribbon='right'
                   color='red'
-                  content='This event has been cancelled'
+                  content={ t('event.cancelledLabel', { defaultValue: 'This event has been cancelled' }) }
                 />
               ) }
             </Item.Content>
@@ -47,7 +49,7 @@ function EventListItem({ event }) {
         <Button
           floated='right'
           color='teal'
-          content={ t('event.button.view') }
+          content={ t('event.button.view', { defaultValue: 'View' }) }
           as={ Link } to={ `/events/${ event.id }` }
         />
       </Segment>

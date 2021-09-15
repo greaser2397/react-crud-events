@@ -5,8 +5,11 @@ import * as Yup from 'yup';
 import { Button } from 'semantic-ui-react';
 import { toast } from 'react-toastify';
 import { updateUserProfile } from '../../../firestore/firestoreService';
+import { useTranslation } from 'react-i18next';
 
 export default function ProfileForm({ profile }) {
+  const { t } = useTranslation();
+
   return (
     <Formik
       initialValues={ {
@@ -28,14 +31,20 @@ export default function ProfileForm({ profile }) {
     >
       { ({ isSubmitting, dirty, isValid }) => (
         <Form className='ui form'>
-          <TextInput name='displayName' placeholder='Display Name' />
-          <TextArea name='description' placeholder='Description' />
+          <TextInput
+            name='displayName'
+            placeholder={ t('profile.field.displayName', { defaultValue: 'Display Name' }) }
+          />
+          <TextArea
+            name='description'
+            placeholder={ t('profile.field.description', { defaultValue: 'Description' }) }
+          />
           <Button
             loading={ isSubmitting }
             disabled={ isSubmitting || !dirty || !isValid }
             floated='right'
             positive size='large'
-            content='Update Profile'
+            content={ t('profile.button.updateProfile', { defaultValue: 'Update Profile' }) }
           />
         </Form>
       ) }

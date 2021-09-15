@@ -95,7 +95,9 @@ function EventForm({ match, history, location }) {
     deps: [match.params.id, dispatch]
   });
 
-  if (loading) return <AsyncLoader content='Loading event...' />
+  if (loading) return (
+    <AsyncLoader content={ t('event.loading', { defaultValue: 'Loading event...' }) } />
+  )
   if (error) return <Redirect to='/error' />
 
   return (
@@ -120,15 +122,37 @@ function EventForm({ match, history, location }) {
       >
         { ({ isSubmitting, dirty, isValid, values }) => (
           <Form className='ui form'>
-            <Header sub color='teal' content='Event Details' />
-            <TextInput name='title' placeholder={ t('form.field.title') } />
-            <SelectInput name='category' placeholder={ t('form.field.category') } options={ categoryData } />
-            <TextArea name='description' placeholder={ t('form.field.description') } rows={ 4 } />
-            <Header sub color='teal' content='Event Location Details' />
-            <PlaceInput name='city' placeholder={ t('form.field.city') } />
+            <Header
+              sub
+              color='teal'
+              content={ t('event.header.details', { defaultValue: 'Event Details' }) }
+            />
+            <TextInput
+              name='title'
+              placeholder={ t('event.field.title', { defaultValue: 'Title' }) }
+            />
+            <SelectInput
+              name='category'
+              placeholder={ t('event.field.category', { defaultValue: 'Category' }) }
+              options={ categoryData }
+            />
+            <TextArea
+              name='description'
+              placeholder={ t('event.field.description', { defaultValue: 'Description' }) }
+              rows={ 4 }
+            />
+            <Header
+              sub
+              color='teal'
+              content={ t('event.header.locationDetails', { defaultValue: 'Event Location Details' }) }
+            />
+            <PlaceInput
+              name='city'
+              placeholder={ t('event.field.city', { defaultValue: 'City' }) }
+            />
             <PlaceInput
               name='venue'
-              placeholder={ t('form.field.venue') }
+              placeholder={ t('event.field.venue', { defaultValue: 'Venue' }) }
               disabled={ !values.city.latLng }
               options={ {
                 location: new google.maps.LatLng(values.city.latLng),
@@ -138,7 +162,7 @@ function EventForm({ match, history, location }) {
             />
             <DateInput
               name='date'
-              placeholderText={ t('form.field.date') }
+              placeholderText={ t('event.field.date', { defaultValue: 'Date' }) }
               timeFormat='HH:mm'
               showTimeSelect
               timeCaption='time'
@@ -152,7 +176,9 @@ function EventForm({ match, history, location }) {
                   type='button'
                   floated='left'
                   color={ selectedEvent.isCancelled ? 'green' : 'red' }
-                  content={ selectedEvent.isCancelled ? 'Reactivate Event' : 'Cancel Event' }
+                  content={ selectedEvent.isCancelled
+                    ? t('form.button.reactivateEvent', { defaultValue: 'Reactivate Event' })
+                    : t('form.button.cancelEvent', { defaultValue: 'Cancel Event' }) }
                   onClick={ () => setConfirmToggleOpen(true) }
                 />
                 <Button
@@ -160,7 +186,7 @@ function EventForm({ match, history, location }) {
                   type='button'
                   floated='left'
                   color='red'
-                  content='Delete Event'
+                  content={ t('form.button.deleteEvent', { defaultValue: 'Delete Event' }) }
                   onClick={ () => setConfirmDeleteOpen(true) }
                 />
               </>
@@ -171,31 +197,39 @@ function EventForm({ match, history, location }) {
               floated='right'
               loading={ isSubmitting }
               disabled={ !isValid || !dirty || isSubmitting }
-              content={ t(`form.button.${ selectedEvent ? 'update' : 'submit' }`) }
+              content={ selectedEvent
+                ? t('form.button.update', { defaultValue: 'Update' })
+                : t('form.button.create', { defaultValue: 'Create' }) }
             />
             <Button
               type='submit'
               floated='right'
               disabled={ isSubmitting }
-              content={ t('form.button.cancel') }
+              content={ t('form.button.cancel', { defaultValue: 'Cancel' }) }
               onClick={ history.goBack }
             />
           </Form>
         ) }
       </Formik>
       <Confirm
-        content={ selectedEvent?.isCancelled
-          ? 'This will reactivate the selected event. Are you sure?'
-          : 'This will cancel the selected event. Are you sure?' }
         open={ confirmToggleOpen }
         onCancel={ () => setConfirmToggleOpen(false) }
         onConfirm={ () => handleCancelToggle(selectedEvent) }
+        content={ selectedEvent?.isCancelled
+          ? t('event.message.reactivateEvent', {
+            defaultValue: 'This will reactivate the selected event. Are you sure?'
+          })
+          : t('event.message.cancelEvent', {
+            defaultValue: 'This will cancel the selected event. Are you sure?'
+          }) }
       />
       <Confirm
-        content='This will delete the selected event. Are you sure?'
         open={ confirmDeleteOpen }
         onCancel={ () => setConfirmDeleteOpen(false) }
         onConfirm={ () => handleDeleteEvent(selectedEvent) }
+        content={ t('event.message.deleteEvent', {
+          defaultValue: 'This will delete the selected event. Are you sure?'
+        }) }
       />
     </Segment>
   )

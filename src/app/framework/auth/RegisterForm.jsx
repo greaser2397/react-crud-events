@@ -8,12 +8,17 @@ import { useDispatch } from 'react-redux';
 import { closeModal } from '../modals/modalReducer';
 import { registerInFirebase } from '../../firestore/firebaseService';
 import SocialLogin from './SocialLogin';
+import { useTranslation } from 'react-i18next';
 
 export default function RegisterForm() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   return (
-    <ModalWrapper size='mini' header='Register to React Events'>
+    <ModalWrapper
+      size='mini'
+      header={ t('modal.message.registerInApp', { defaultValue: 'Register to React Events' }) }
+    >
       <Formik
         initialValues={ { displayName: '', email: '', password: '' } }
         validationSchema={ Yup.object({
@@ -34,9 +39,19 @@ export default function RegisterForm() {
       >
         { ({ isSubmitting, dirty, isValid, errors }) => (
           <Form className='ui form'>
-            <TextInput name='displayName' placeholder='Display Name' />
-            <TextInput name='email' placeholder='Email Address' />
-            <TextInput name='password' type='password' placeholder='Password' />
+            <TextInput
+              name='displayName'
+              placeholder={ t('form.field.displayName', { defaultValue: 'Display Name' }) }
+            />
+            <TextInput
+              name='email'
+              placeholder={ t('form.field.email', { defaultValue: 'Email Address' }) }
+            />
+            <TextInput
+              name='password'
+              type='password'
+              placeholder={ t('form.field.password', { defaultValue: 'Password' }) }
+            />
             { errors.auth && <Label basic color='red' style={ { marginBottom: 10 } } content={ errors.auth } /> }
             <Button
               fluid
@@ -45,7 +60,7 @@ export default function RegisterForm() {
               type='submit'
               size='large'
               color='teal'
-              content='Login'
+              content={ t('form.button.register', { defaultValue: 'Register' }) }
             />
             <Divider horizontal>Or</Divider>
             <SocialLogin />

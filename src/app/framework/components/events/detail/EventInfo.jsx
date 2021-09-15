@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Segment, Grid, Icon, Button } from 'semantic-ui-react';
 import { format } from 'date-fns';
 import EventMap from './EventMap';
+import { useTranslation } from 'react-i18next';
 
 function EventInfo({ event }) {
+  const { t } = useTranslation();
   const [mapOpen, setMapOpen] = useState(false);
 
   return (
@@ -11,7 +13,7 @@ function EventInfo({ event }) {
       <Segment attached="top">
         <Grid>
           <Grid.Column width={ 1 }>
-            <Icon size="large" color="teal" name="info"/>
+            <Icon size="large" color="teal" name="info" />
           </Grid.Column>
           <Grid.Column width={ 15 }>
             <p>{ event.description }</p>
@@ -21,7 +23,7 @@ function EventInfo({ event }) {
       <Segment attached>
         <Grid verticalAlign="middle">
           <Grid.Column width={ 1 }>
-            <Icon name="calendar" size="large" color="teal"/>
+            <Icon name="calendar" size="large" color="teal" />
           </Grid.Column>
           <Grid.Column width={ 15 }>
             <span>{ format(event.date, 'MMMM d, yyyy h:mm a') }</span>
@@ -31,21 +33,25 @@ function EventInfo({ event }) {
       <Segment attached>
         <Grid verticalAlign="middle">
           <Grid.Column width={ 1 }>
-            <Icon name="marker" size="large" color="teal"/>
+            <Icon name="marker" size="large" color="teal" />
           </Grid.Column>
           <Grid.Column width={ 11 }>
             <span>{ event.venue.address }</span>
           </Grid.Column>
           <Grid.Column width={ 4 }>
-            <Button color="teal" size="tiny"
-                    content={ mapOpen ? 'Hide Map' : 'Show Map' }
-                    onClick={ () => setMapOpen(!mapOpen) }
+            <Button
+              color="teal"
+              size="tiny"
+              content={ mapOpen
+                ? t('event.button.hideMap', { defaultValue: 'Hide Map' })
+                : t('event.button.showMap', { defaultValue: 'Show Map' }) }
+              onClick={ () => setMapOpen(!mapOpen) }
             />
           </Grid.Column>
         </Grid>
       </Segment>
       { mapOpen &&
-      <EventMap latLng={ event.venue.latLng }/> }
+      <EventMap latLng={ event.venue.latLng } /> }
     </Segment.Group>
   )
 }

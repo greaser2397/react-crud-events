@@ -8,7 +8,7 @@ export default function TextInput({ label, ...props }) {
   return (
     <FormField error={ meta.touched && !!meta.error }>
       <label>{ label }</label>
-      <input { ...field }{ ...props }/>
+      <input { ...field }{ ...props } />
       { meta.touched && meta.error ? (
         <Label basic color='red'>{ meta.error }</Label>
       ) : null }

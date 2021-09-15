@@ -7,8 +7,10 @@ import { getFileExtension } from '../../util/Util';
 import { uploadToFirebaseStorage } from '../../../firestore/firebaseService';
 import { toast } from 'react-toastify';
 import { updateUserProfilePhoto } from '../../../firestore/firestoreService';
+import { useTranslation } from 'react-i18next';
 
 export default function PhotoUploadWidget({ setEditMode }) {
+  const { t } = useTranslation();
   const [files, setFiles] = useState([]);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -47,19 +49,31 @@ export default function PhotoUploadWidget({ setEditMode }) {
   return (
     <Grid>
       <Grid.Column width={ 4 }>
-        <Header color='teal' sub content='Step 1 - Add Photo' />
+        <Header
+          sub
+          color='teal'
+          content={ t('profile.imageUploader.step1', { defaultValue: 'Step 1 - Add Photo' }) }
+        />
         <PhotoWidgetDropzone setFiles={ setFiles } />
       </Grid.Column>
       <Grid.Column width={ 1 } />
       <Grid.Column width={ 4 }>
-        <Header color='teal' sub content='Step 2 - Resize' />
+        <Header
+          sub
+          color='teal'
+          content={ t('profile.imageUploader.step2', { defaultValue: 'Step 2 - Resize' }) }
+        />
         { files.length > 0 && (
           <PhotoWidgetCropper setImage={ setImage } imagePreview={ files[0].preview } />
         ) }
       </Grid.Column>
       <Grid.Column width={ 1 } />
       <Grid.Column width={ 4 }>
-        <Header color='teal' sub content='Step 3 - Preview & Upload' />
+        <Header
+          sub
+          color='teal'
+          content={ t('profile.imageUploader.step3', { defaultValue: 'Step 3 - Preview & Upload' }) }
+        />
         { files.length > 0 && (
           <>
             <div className="img-preview" style={ { minHeight: 200, minWidth: 200, overflow: 'hidden' } } />

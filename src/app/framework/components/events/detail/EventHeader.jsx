@@ -6,8 +6,10 @@ import { toast } from 'react-toastify';
 import { addUserAttendance, cancelUserAttendance } from '../../../../firestore/firestoreService';
 import { useSelector } from 'react-redux';
 import UnauthModal from '../../../auth/UnauthModal';
+import { useTranslation } from 'react-i18next';
 
 function EventHeader({ event, isGoing, isHost }) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const { authenticated } = useSelector(state => state.auth);
@@ -51,7 +53,9 @@ function EventHeader({ event, isGoing, isHost }) {
                   />
                   <p>{ format(event.date, 'MMMM d, yyyy h:mm a') }</p>
                   <p>
-                    Hosted by <strong><Link to={ `/profile/${ event.hostUid }` }>{ event.hostedBy }</Link></strong>
+                    { t('event.hostedBy', {
+                      defaultValue: 'Hosted by'
+                    }) } <strong><Link to={ `/profile/${ event.hostUid }` }>{ event.hostedBy }</Link></strong>
                   </p>
                 </Item.Content>
               </Item>
@@ -63,20 +67,31 @@ function EventHeader({ event, isGoing, isHost }) {
           { !isHost && (
             <>
               { isGoing ? (
-                <Button loading={ loading } onClick={ handleUserLeaveEvent }>Cancel My Place</Button>
+                <Button
+                  loading={ loading }
+                  onClick={ handleUserLeaveEvent }
+                  content={ t('event.button.leaveEvent', { defaultValue: 'Cancel My Place' }) }
+                />
               ) : (
                 <Button
                   onClick={ authenticated ? handleUserJoinEvent : () => setModalOpen(true) }
                   loading={ loading }
-                  color="teal">
-                  JOIN THIS EVENT
-                </Button>
+                  color="teal"
+                  content={ t('event.button.joinEvent', { defaultValue: 'JOIN THIS EVENT' }) }
+                />
               ) }
             </>
           ) }
 
-          { isHost &&
-          <Button color="orange" floated="right" as={ Link } to={ `/manage/${ event.id }` }>Manage Event</Button> }
+          { isHost && (
+            <Button
+              color="orange"
+              floated="right"
+              as={ Link }
+              to={ `/manage/${ event.id }` }
+              content={ t('event.button.manageEvent', { defaultValue: 'Manage Event' }) }
+            />
+          ) }
         </Segment>
       </Segment.Group>
     </>

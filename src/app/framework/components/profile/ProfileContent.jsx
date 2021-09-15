@@ -4,27 +4,42 @@ import AboutTab from './tabs/AboutTab';
 import PhotosTab from './tabs/PhotosTab';
 import EventsTab from './tabs/EventsTab';
 import FollowingTab from './tabs/FollowingTab';
+import { useTranslation } from 'react-i18next';
 
 export default function ProfileContent({ profile, isCurrentUser }) {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(0);
 
   const panes = [
-    { menuItem: 'About', render: () => <AboutTab profile={ profile } isCurrentUser={ isCurrentUser } /> },
-    { menuItem: 'Photos', render: () => <PhotosTab profile={ profile } isCurrentUser={ isCurrentUser } /> },
-    { menuItem: 'Events', render: () => <EventsTab profile={ profile } /> },
     {
-      menuItem: 'Followers', render: () =>
-        <FollowingTab
-          profile={ profile }
-          key={ profile.id }
-          activeTab={ activeTab } />
+      menuItem: t('profile.panes.about.label', { defaultValue: 'About' }),
+      render: () => <AboutTab profile={ profile } isCurrentUser={ isCurrentUser } />
     },
     {
-      menuItem: 'Following', render: () =>
+      menuItem: t('profile.panes.photos.label', { defaultValue: 'Photos' }),
+      render: () => <PhotosTab profile={ profile } isCurrentUser={ isCurrentUser } />
+    },
+    {
+      menuItem: t('profile.panes.events.label', { defaultValue: 'Events' }),
+      render: () => <EventsTab profile={ profile } />
+    },
+    {
+      menuItem: t('profile.panes.followers.label', { defaultValue: 'Followers' }),
+      render: () => (
         <FollowingTab
           profile={ profile }
           key={ profile.id }
           activeTab={ activeTab } />
+      )
+    },
+    {
+      menuItem: t('profile.panes.following.label', { defaultValue: 'Following' }),
+      render: () => (
+        <FollowingTab
+          profile={ profile }
+          key={ profile.id }
+          activeTab={ activeTab } />
+      )
     }
   ];
 

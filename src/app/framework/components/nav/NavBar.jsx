@@ -14,18 +14,27 @@ function NavBar() {
     <Menu inverted fixed='top'>
       <Container>
         <Menu.Item as={ NavLink } exact to='/' className='logo'>
-          <img src="/assets/logo.png" alt="Logo"/>
-          React Events
+          <img src="/assets/logo.png" alt="Logo" />
+          { t('common.appName', { defaultValue: 'React Events' }) }
         </Menu.Item>
-        <Menu.Item as={ NavLink } exact to='/events' name={ t('navigation.item.events') }/>
-        {/*<Menu.Item as={ NavLink } exact to='/sandbox' name='Sandbox'/>*/}
+        <Menu.Item
+          as={ NavLink }
+          exact
+          to='/events'
+          name={ t('navigation.item.events', { defaultValue: 'Events' }) }
+        />
+        {/*<Menu.Item as={ NavLink } exact to='/sandbox' name='Sandbox'/>*/ }
         { authenticated &&
         <Menu.Item as={ NavLink } to='/createEvent'>
-          <Button positive inverted content={ t('navigation.button.createEvent') }/>
+          <Button
+            positive
+            inverted
+            content={ t('navigation.item.createEvent', { defaultValue: 'Create Event' }) }
+          />
         </Menu.Item> }
         { authenticated
-          ? <SignedInMenu/>
-          : <SignedOutMenu/>
+          ? <SignedInMenu />
+          : <SignedOutMenu />
         }
       </Container>
     </Menu>

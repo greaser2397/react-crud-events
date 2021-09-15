@@ -24,12 +24,27 @@ function SignedInMenu() {
       <Image avatar spaced='right' src={ currentUserProfile?.photoURL || '/assets/user.png' } />
       <Dropdown pointing='top left' text={ currentUserProfile?.displayName }>
         <Dropdown.Menu>
-          <Dropdown.Item as={ Link } to='/createEvent' text={ t('navigation.button.createEvent') } icon='plus' />
-          <Dropdown.Item text={ t('navigation.item.profile') } icon='user' as={ Link } to={ `/profile/${ currentUserProfile?.id }` } />
-          <Dropdown.Item text='My Account' icon='settings' as={ Link } to='/account' />
           <Dropdown.Item
-            text={ t('navigation.item.signOut') }
+            as={ Link }
+            to='/createEvent'
+            icon='plus'
+            text={ t('navigation.item.createEvent', { defaultValue: 'Create Event' }) }
+          />
+          <Dropdown.Item
+            as={ Link }
+            to={ `/profile/${ currentUserProfile?.id }` }
+            icon='user'
+            text={ t('navigation.item.profile', { defaultValue: 'My Profile' }) }
+          />
+          <Dropdown.Item
+            as={ Link }
+            to='/account'
+            icon='settings'
+            text={ t('navigation.item.account', { defaultValue: 'My Account' }) }
+          />
+          <Dropdown.Item
             icon='power'
+            text={ t('navigation.item.signOut', { defaultValue: 'Sign out' }) }
             onClick={ handleSignOut }
           />
         </Dropdown.Menu>

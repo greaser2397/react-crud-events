@@ -5,8 +5,10 @@ import { followUser, getFollowingDoc, unfollowUser } from '../../../firestore/fi
 import { useDispatch, useSelector } from 'react-redux';
 import { setFollowUser, setUnfollowUser } from './profileActions';
 import { CLEAR_FOLLOWINGS } from './profileConstants';
+import { useTranslation } from 'react-i18next';
 
 export default function ProfileHeader({ profile, isCurrentUser }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const { followingUser } = useSelector(state => state.profile);
@@ -71,15 +73,27 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
         </Grid.Column>
         <Grid.Column width={ 4 }>
           <Statistic.Group>
-            <Statistic label='Followers' value={ profile.followerCount || 0 } />
-            <Statistic label='Following' value={ profile.followingCount || 0 } />
+            <Statistic
+              label={ t('profile.stats.followers', { defaultValue: 'Followers' }) }
+              value={ profile.followerCount || 0 }
+            />
+            <Statistic
+              label={ t('profile.stats.following', { defaultValue: 'Following' }) }
+              value={ profile.followingCount || 0 }
+            />
           </Statistic.Group>
           { !isCurrentUser &&
           <>
             <Divider />
             <Reveal animated='move'>
               <Reveal.Content visible style={ { width: '100%' } }>
-                <Button fluid color='teal' content={ followingUser ? 'Following' : 'Not following' } />
+                <Button
+                  fluid
+                  color='teal'
+                  content={ followingUser
+                    ? t('profile.button.following', { defaultValue: 'Following' })
+                    : t('profile.button.notFollowing', { defaultValue: 'Not following' }) }
+                />
               </Reveal.Content>
               <Reveal.Content hidden style={ { width: '100%' } }>
                 <Button
@@ -87,7 +101,9 @@ export default function ProfileHeader({ profile, isCurrentUser }) {
                   onClick={ () => followingUser ? handleUnfollowUser() : handleFollowUser() }
                   fluid
                   color={ followingUser ? 'red' : 'green' }
-                  content={ followingUser ? 'Unfollow' : 'Follow' }
+                  content={ followingUser
+                    ? t('profile.button.unfollow', { defaultValue: 'Unfollow' })
+                    : t('profile.button.follow', { defaultValue: 'Follow' }) }
                 />
               </Reveal.Content>
             </Reveal>

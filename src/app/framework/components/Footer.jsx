@@ -19,9 +19,9 @@ function Footer() {
       <Container>
         <Menu.Item position='right'>
           <Button.Group className='lang-switcher' size='small' basic compact inverted color='olive'>
-            <Button className='active' content={ 'EN' } value='en' onClick={ changeLanguage }/>
-            <Button.Or/>
-            <Button content={ 'RU' } value='ru' onClick={ changeLanguage }/>
+            <Button className='active' content={ 'EN' } value='en' onClick={ changeLanguage } />
+            <Button.Or />
+            <Button content={ 'RU' } value='ru' onClick={ changeLanguage } />
           </Button.Group>
         </Menu.Item>
       </Container>

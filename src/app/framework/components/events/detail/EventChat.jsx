@@ -8,8 +8,10 @@ import { Link } from 'react-router-dom';
 import { formatDistance } from 'date-fns';
 import { CLEAR_COMMENTS } from '../eventConstants';
 import { createDataTree } from '../../../util/Util';
+import { useTranslation } from 'react-i18next';
 
 function EventChat({ eventId }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { comments } = useSelector(state => state.event);
   const [showReplyForm, setShowReplyForm] = useState({ open: false, commentId: null });
@@ -39,7 +41,10 @@ function EventChat({ eventId }) {
         color="teal"
         style={ { border: 'none' } }
       >
-        <Header>{ authenticated ? 'Chat about this event' : 'Sign in to view and comment' }</Header>
+        <Header>{ authenticated
+          ? t('event.header.chatAboutEvent', { defaultValue: 'Chat about this event' })
+          : t('event.header.signInToComment', { defaultValue: 'Sign in to view and comment' }) }
+        </Header>
       </Segment>
 
       { authenticated && (

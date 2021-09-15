@@ -10,8 +10,10 @@ import useFirestoreDoc from '../hooks/useFirestoreDoc';
 import { listenToEventFromFirestore } from '../../firestore/firestoreService';
 import { listenToSelectedEvent } from '../components/events/eventActions';
 import AsyncLoader from '../../layout/AsyncLoader';
+import { useTranslation } from 'react-i18next';
 
 function EventDetailView({ match }) {
+  const { t } = useTranslation();
   const event = useSelector(state => state.event.selectedEvent);
   const { currentUser } = useSelector(state => state.auth);
   const dispatch = useDispatch();
@@ -25,7 +27,9 @@ function EventDetailView({ match }) {
     deps: [match.params.id, dispatch]
   });
 
-  if (loading || (!event && !error)) return <AsyncLoader content='Loading event...' />
+  if (loading || (!event && !error)) return (
+    <AsyncLoader content={ t('event.loading', { defaultValue: 'Loading event...' }) } />
+  )
   if (error) return <Redirect to='/error' />
 
   return (

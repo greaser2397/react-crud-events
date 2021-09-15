@@ -6,15 +6,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFirestoreCollection from '../../../hooks/useFirestoreCollection';
 import { getUserEventsQuery } from '../../../../firestore/firestoreService';
 import { listenToUserEvents } from '../profileActions';
+import { useTranslation } from 'react-i18next';
 
 
 export default function EventsTab({ profile }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState(0);
   const panes = [
-    { menuItem: 'Future Events', pane: { key: 'future' } },
-    { menuItem: 'Past Events', pane: { key: 'past' } },
-    { menuItem: 'Hosting', pane: { key: 'hosting' } }
+    {
+      menuItem: t('profile.panes.events.future', { defaultValue: 'Future Events' }),
+      pane: { key: 'future' }
+    },
+    {
+      menuItem: t('profile.panes.events.past', { defaultValue: 'Past Events' }),
+      pane: { key: 'past' }
+    },
+    {
+      menuItem: t('profile.panes.events.hosting', { defaultValue: 'Hosting' }),
+      pane: { key: 'hosting' }
+    }
   ];
   const { profileEvents } = useSelector(state => state.profile);
   const { loading } = useSelector(state => state.async);
@@ -29,7 +40,11 @@ export default function EventsTab({ profile }) {
     <Tab.Pane loading={ loading }>
       <Grid>
         <Grid.Column width={ 16 }>
-          <Header floated='left' icon='calendar' content='Events' />
+          <Header
+            floated='left'
+            icon='calendar'
+            content={ t('profile.panes.events.label', { defaultValue: 'Events' }) }
+          />
         </Grid.Column>
         <Grid.Column width={ 16 }>
           <Tab

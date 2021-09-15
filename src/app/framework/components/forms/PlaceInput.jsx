@@ -11,7 +11,6 @@ export default function PlaceInput({ label, options, ...props }) {
       .then(results => getLatLng(results[0]))
       .then(latLng => helpers.setValue({ address, latLng }))
       .catch(error => helpers.setValue(error));
-    // setAddress(address);
   }
 
   function handleBlur(e) {
@@ -31,7 +30,7 @@ export default function PlaceInput({ label, options, ...props }) {
 
       { ({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
         <FormField error={ meta.touched && !!meta.error }>
-          <input { ...getInputProps({ name: field.name, onBlur: e => handleBlur(e), ...props }) }/>
+          <input { ...getInputProps({ name: field.name, onBlur: e => handleBlur(e), ...props }) } />
           { meta.touched && meta.error ? (
             <Label basic color='red'>{ meta.error['address'] }</Label>
           ) : null }

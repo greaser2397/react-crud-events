@@ -1,8 +1,11 @@
 import React from 'react';
 import { Segment, Item, Label } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function EventSidebar({ attendees, hostUid }) {
+  const { t } = useTranslation();
+
   return (
     <Segment.Group className='eventSidebar'>
       <Segment
@@ -13,7 +16,7 @@ function EventSidebar({ attendees, hostUid }) {
         inverted
         color="teal"
       >
-        { attendees.length } { attendees.length > 1 ? 'People' : 'Person' } Going
+        { t('event.message.attendeeGoing', { count: attendees.length, defaultValue: '{{count}} Person Going' }) }
       </Segment>
       <Segment attached>
         <Item.Group relaxed divided>

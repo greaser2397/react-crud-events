@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { firebaseObjectToArray, getUserFeedRef } from '../../../../firestore/firebaseService';
 import { listenToFeed } from '../../profile/profileActions';
 import EventsFeedItem from './EventsFeedItem';
+import { useTranslation } from 'react-i18next';
 
 export default function EventsFeed() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { feed } = useSelector(state => state.profile);
 
@@ -33,7 +35,7 @@ export default function EventsFeed() {
         attached
         color='teal'
         icon='newspaper'
-        content='News feed'
+        content={ t('event.header.newsFeed', { defaultValue: 'News feed' }) }
       />
       <Segment attached='bottom'>
         <Feed>

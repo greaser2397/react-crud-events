@@ -8,12 +8,17 @@ import { useDispatch } from 'react-redux';
 import { closeModal } from '../modals/modalReducer';
 import { signInWithEmail } from '../../firestore/firebaseService';
 import SocialLogin from './SocialLogin';
+import { useTranslation } from 'react-i18next';
 
 export default function LoginForm() {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
 
   return (
-    <ModalWrapper size='mini' header='Sign in to React Events'>
+    <ModalWrapper
+      size='mini'
+      header={ t('modal.login.header', { defaultValue: 'Sign in to React Events' }) }
+    >
       <Formik
         initialValues={ { email: '', password: '' } }
         validationSchema={ Yup.object({
@@ -27,14 +32,24 @@ export default function LoginForm() {
             dispatch(closeModal());
           } catch (error) {
             setSubmitting(false);
-            setErrors({ auth: error.message || 'Problem with username or password' });
+            setErrors({
+              auth: error.message ||
+                t('errors.invalidUsernameOrPass', { defaultValue: 'Problem with username or password' })
+            });
           }
         } }
       >
         { ({ isSubmitting, dirty, isValid, errors }) => (
           <Form className='ui form'>
-            <TextInput name='email' placeholder='Email Address' />
-            <TextInput name='password' type='password' placeholder='Password' />
+            <TextInput
+              name='email'
+              placeholder={ t('form.field.email', { defaultValue: 'Email Address' }) }
+            />
+            <TextInput
+              name='password'
+              type='password'
+              placeholder={ t('form.field.password', { defaultValue: 'Password' }) }
+            />
             { errors.auth && <Label basic color='red' style={ { marginBottom: 10 } } content={ errors.auth } /> }
             <Button
               fluid
@@ -43,7 +58,7 @@ export default function LoginForm() {
               type='submit'
               size='large'
               color='teal'
-              content='Login'
+              content={ t('form.button.login', { defaultValue: 'Login' }) }
             />
             <Divider horizontal>Or</Divider>
             <SocialLogin />

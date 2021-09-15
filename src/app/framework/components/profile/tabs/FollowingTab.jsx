@@ -5,9 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import useFirestoreCollection from '../../../hooks/useFirestoreCollection';
 import { getFollowersCollection, getFollowingCollection } from '../../../../firestore/firestoreService';
 import { listenToFollowers, listenToFollowings } from '../profileActions';
+import { useTranslation } from 'react-i18next';
 
 
 export default function FollowingTab({ profile, activeTab }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { followers, following } = useSelector(state => state.profile);
 
@@ -29,7 +31,9 @@ export default function FollowingTab({ profile, activeTab }) {
           <Header
             floated='left'
             icon='user'
-            content={ activeTab === 3 ? 'Followers' : 'Following' }
+            content={ activeTab === 3
+              ? t('profile.panes.followers.label', { defaultValue: 'Followers' })
+              : t('profile.panes.following.label', { defaultValue: 'Following' }) }
           />
         </Grid.Column>
         <Grid.Column width={ 16 }>

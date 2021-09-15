@@ -8,7 +8,7 @@ export default function TextArea({ label, ...props }) {
   return (
     <FormField error={ meta.touched && !!meta.error }>
       <label>{ label }</label>
-      <textarea { ...field }{ ...props }/>
+      <textarea { ...field }{ ...props } />
       { meta.touched && meta.error ? (
         <Label basic color='red'>{ meta.error }</Label>
       ) : null }

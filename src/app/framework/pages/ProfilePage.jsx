@@ -7,8 +7,10 @@ import useFirestoreDoc from '../hooks/useFirestoreDoc';
 import { getUserProfile } from '../../firestore/firestoreService';
 import { listenToSelectedUserProfile } from '../components/profile/profileActions';
 import AsyncLoader from '../../layout/AsyncLoader';
+import { useTranslation } from 'react-i18next';
 
 export default function ProfilePage({ match }) {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { selectedUserProfile, currentUserProfile } = useSelector(state => state.profile);
   const { currentUser } = useSelector(state => state.auth);
@@ -28,8 +30,9 @@ export default function ProfilePage({ match }) {
     shouldExecute: match.params.id !== currentUser.id
   });
 
-  if ((loading && !selectedUserProfile) || (!selectedUserProfile && !error)) return <AsyncLoader
-    content='Loading profile...' />;
+  if ((loading && !selectedUserProfile) || (!selectedUserProfile && !error)) return (
+    <AsyncLoader content={ t('profile.loading', { defaultValue: 'Loading profile...' }) } />
+  )
 
   return (
     <Grid>

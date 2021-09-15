@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deletePhotoFromCollection, getUserPhotos, setMainPhoto } from '../../../../firestore/firestoreService';
 import { toast } from 'react-toastify';
 import { deleteFromFirebaseStorage } from '../../../../firestore/firebaseService';
+import { useTranslation } from 'react-i18next';
 
 
 export default function PhotosTab({ profile, isCurrentUser }) {
+  const { t } = useTranslation();
   const [editMode, setEditMode] = useState(false);
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.async);
@@ -50,13 +52,19 @@ export default function PhotosTab({ profile, isCurrentUser }) {
     <Tab.Pane loading={ loading }>
       <Grid>
         <Grid.Column width={ 16 }>
-          <Header floated='left' icon='user' content='Photos' />
+          <Header
+            floated='left'
+            icon='user'
+            content={ t('profile.panes.photos.label', { defaultValue: 'Photos' }) }
+          />
           { isCurrentUser &&
           <Button
             onClick={ () => setEditMode(!editMode) }
             floated='right'
             basic
-            content={ editMode ? 'Cancel' : 'Add Photo' }
+            content={ editMode
+              ? t('profile.panes.photos.cancelEdit', { defaultValue: 'Cancel' })
+              : t('profile.panes.photos.edit', { defaultValue: 'Add Photo' }) }
           /> }
         </Grid.Column>
         <Grid.Column width={ 16 }>
@@ -70,7 +78,7 @@ export default function PhotosTab({ profile, isCurrentUser }) {
                   <Button.Group fluid widths={ 2 }>
                     <Button name={ photo.id }
                             loading={ updating.isUpdating && updating.target === photo.id } basic color='green'
-                            content='Main'
+                            content={ t('profile.panes.photos.main', { defaultValue: 'Main' }) }
                             disabled={ photo.url === profile.photoURL }
                             onClick={ e => handleSetMainPhoto(photo, e.target.name) } />
                     <Button name={ photo.id }
