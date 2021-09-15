@@ -2,6 +2,8 @@ module.exports = {
   // Save the \_old files
   createOldCatalogs: false,
 
+  namespace: 'perevod',
+
   // Indentation of the catalog files
   indentation: 2,
 
@@ -27,7 +29,7 @@ module.exports = {
   // Supports $LOCALE and $NAMESPACE injection
   // Supports JSON (.json) and YAML (.yml) file formats
   // Where to write the locale files relative to process.cwd()
-  output: 'public/locales/$LOCALE/$NAMESPACE.json',
+  output: 'src/i18n/locales/$LOCALE/$NAMESPACE.json',
 
   // An array of globs that describe where to look for source files
   // relative to the location of the configuration file
