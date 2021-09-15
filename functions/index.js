@@ -7,8 +7,6 @@ const db = admin.firestore();
 exports.addFollowing = functions.firestore
   .document("following/{userUid}/userFollowing/{profileId}")
   .onCreate(async (snapshot, context) => {
-    const following = snapshot.data();
-    console.log({ following });
 
     try {
       // eslint-disable-next-line max-len
@@ -71,7 +69,6 @@ exports.eventUpdated = functions.firestore
 
     if (before.attendees.length < after.attendees.length) {
       let attendeeJoined = after.attendees.filter(item1 => !before.attendees.some(item2 => item2.id === item1.id))[0];
-      console.log({ attendeeJoined });
 
       try {
         const followerDocs = await db
@@ -92,7 +89,6 @@ exports.eventUpdated = functions.firestore
 
     if (before.attendees.length > after.attendees.length) {
       let attendeeLeft = before.attendees.filter(item1 => !after.attendees.some(item2 => item2.id === item1.id))[0];
-      console.log({ attendeeLeft });
 
       try {
         const followerDocs = await db
