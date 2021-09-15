@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import TextInput from '../components/forms/TextInput';
 import TextArea from '../components/forms/TextArea';
 import SelectInput from '../components/forms/SelectInput';
-import { categoryData } from '../../api/categoryOptions';
+import { getCategoryData } from '../../api/categoryOptions';
 import DateInput from '../components/forms/DateInput';
 import PlaceInput from '../components/forms/PlaceInput';
 import useFirestoreDoc from '../hooks/useFirestoreDoc';
@@ -31,6 +31,7 @@ function EventForm({ match, history, location }) {
   const dispatch = useDispatch();
   const { selectedEvent } = useSelector(state => state.event);
   const { loading, error } = useSelector(state => state.async);
+  const categories = getCategoryData();
 
   useEffect(() => {
     if (location.pathname !== '/createEvent') return;
@@ -134,7 +135,7 @@ function EventForm({ match, history, location }) {
             <SelectInput
               name='category'
               placeholder={ t('event.field.category', { defaultValue: 'Category' }) }
-              options={ categoryData }
+              options={ categories }
             />
             <TextArea
               name='description'
