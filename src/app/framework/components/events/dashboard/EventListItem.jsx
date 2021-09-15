@@ -4,7 +4,6 @@ import EventListAttendee from './EventListAttendee';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { deleteEventInFirestore } from '../../../../firestore/firestoreService';
 
 function EventListItem({ event }) {
   const { t } = useTranslation();
@@ -45,12 +44,6 @@ function EventListItem({ event }) {
       </Segment>
       <Segment clearing>
         <div>{ event.description }</div>
-        <Button
-          floated='right'
-          color='red'
-          content={ t('event.button.delete') }
-          onClick={ () => deleteEventInFirestore(event.id) }
-        />
         <Button
           floated='right'
           color='teal'

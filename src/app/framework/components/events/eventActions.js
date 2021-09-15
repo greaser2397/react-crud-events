@@ -1,5 +1,5 @@
 import {
-  CLEAR_EVENTS,
+  CLEAR_EVENTS, CLEAR_SELECTED_EVENT,
   CREATE_EVENT,
   DELETE_EVENT,
   FETCH_EVENTS,
@@ -46,6 +46,12 @@ export function listenToSelectedEvent(event) {
   return {
     type: LISTEN_TO_SELECTED_EVENT,
     payload: event
+  }
+}
+
+export function clearSelectedEvent() {
+  return {
+    type: CLEAR_SELECTED_EVENT
   }
 }
 

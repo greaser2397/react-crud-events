@@ -1,9 +1,9 @@
 /* global google */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header, Segment, Button, Confirm } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { listenToSelectedEvent } from '../components/events/eventActions';
+import { clearSelectedEvent, listenToSelectedEvent } from '../components/events/eventActions';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import TextInput from '../components/forms/TextInput';
@@ -17,18 +17,25 @@ import AsyncLoader from '../../layout/AsyncLoader';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import {
-  addEventToFirestore, cancelEventToggle,
+  addEventToFirestore, cancelEventToggle, deleteEventInFirestore,
   listenToEventFromFirestore,
   updateEventInFirestore
 } from '../../firestore/firestoreService';
 
-function EventForm({ match, history }) {
+function EventForm({ match, history, location }) {
   const { t } = useTranslation();
   const [loadingCancel, setLoadingCancel] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [loadingDelete, setLoadingDelete] = useState(false);
+  const [confirmToggleOpen, setConfirmToggleOpen] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
   const dispatch = useDispatch();
   const { selectedEvent } = useSelector(state => state.event);
   const { loading, error } = useSelector(state => state.async);
+
+  useEffect(() => {
+    if (location.pathname !== '/createEvent') return;
+    dispatch(clearSelectedEvent());
+  }, [dispatch, location.pathname]);
 
   const defaultValues = selectedEvent || {
     title: '',
@@ -55,7 +62,7 @@ function EventForm({ match, history }) {
   });
 
   async function handleCancelToggle(event) {
-    setConfirmOpen(false);
+    setConfirmToggleOpen(false);
     setLoadingCancel(true);
 
     try {
@@ -67,8 +74,22 @@ function EventForm({ match, history }) {
     }
   }
 
+  async function handleDeleteEvent(event) {
+    setConfirmDeleteOpen(false);
+    setLoadingDelete(true);
+
+    try {
+      await deleteEventInFirestore(event.id);
+      setLoadingDelete(false);
+      history.push('/events')
+    } catch (err) {
+      setLoadingDelete(true);
+      toast.error(err.message);
+    }
+  }
+
   useFirestoreDoc({
-    shouldExecute: !!match.params.id,
+    shouldExecute: match.params.id !== selectedEvent?.id && location.pathname !== '/createEvent',
     query: () => listenToEventFromFirestore(match.params.id),
     data: (evt) => dispatch(listenToSelectedEvent(evt)),
     deps: [match.params.id, dispatch]
@@ -80,6 +101,7 @@ function EventForm({ match, history }) {
   return (
     <Segment clearing>
       <Formik
+        enableReinitialize
         initialValues={ defaultValues }
         validationSchema={ validationSchema }
         onSubmit={ async (values, { setSubmitting }) => {
@@ -121,16 +143,28 @@ function EventForm({ match, history }) {
               showTimeSelect
               timeCaption='time'
               dateFormat='MMMM d, yyyy h:mm a'
+              autoComplete='off'
             />
-            { selectedEvent &&
-            <Button
-              loading={ loadingCancel }
-              type='button'
-              floated='left'
-              color={ selectedEvent.isCancelled ? 'green' : 'red' }
-              content={ selectedEvent.isCancelled ? 'Reactivate Event' : 'Cancel Event' }
-              onClick={ () => setConfirmOpen(true) }
-            /> }
+            { selectedEvent && (
+              <>
+                <Button
+                  loading={ loadingCancel }
+                  type='button'
+                  floated='left'
+                  color={ selectedEvent.isCancelled ? 'green' : 'red' }
+                  content={ selectedEvent.isCancelled ? 'Reactivate Event' : 'Cancel Event' }
+                  onClick={ () => setConfirmToggleOpen(true) }
+                />
+                <Button
+                  loading={ loadingDelete }
+                  type='button'
+                  floated='left'
+                  color='red'
+                  content='Delete Event'
+                  onClick={ () => setConfirmDeleteOpen(true) }
+                />
+              </>
+            ) }
             <Button
               positive
               type='submit'
@@ -151,11 +185,17 @@ function EventForm({ match, history }) {
       </Formik>
       <Confirm
         content={ selectedEvent?.isCancelled
-          ? 'This will reactivate the event. Are you sure'
-          : 'This will cancel the event. Are you sure' }
-        open={ confirmOpen }
-        onCancel={ () => setConfirmOpen(false) }
+          ? 'This will reactivate the selected event. Are you sure?'
+          : 'This will cancel the selected event. Are you sure?' }
+        open={ confirmToggleOpen }
+        onCancel={ () => setConfirmToggleOpen(false) }
         onConfirm={ () => handleCancelToggle(selectedEvent) }
+      />
+      <Confirm
+        content='This will delete the selected event. Are you sure?'
+        open={ confirmDeleteOpen }
+        onCancel={ () => setConfirmDeleteOpen(false) }
+        onConfirm={ () => handleDeleteEvent(selectedEvent) }
       />
     </Segment>
   )

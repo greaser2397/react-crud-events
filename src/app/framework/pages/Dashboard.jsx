@@ -10,7 +10,7 @@ import { RETAIN_STATE } from '../components/events/eventConstants';
 
 
 function Dashboard() {
-  const limit = 2;
+  const limit = 4;
   const dispatch = useDispatch();
   const {
     events,
