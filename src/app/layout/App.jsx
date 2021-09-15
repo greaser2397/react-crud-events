@@ -7,7 +7,7 @@ import { Route, useLocation } from 'react-router-dom';
 import HomePage from '../framework/pages/HomePage';
 import EventDetailView from '../framework/pages/EventDetailView';
 import EventForm from '../framework/forms/EventForm';
-import Sandbox from '../framework/sandbox/Sandbox';
+// import Sandbox from '../framework/sandbox/Sandbox';
 import ModalManager from '../framework/modals/ModalManager';
 import { ToastContainer } from 'react-toastify';
 import ErrorComponent from '../framework/errors/ErrorComponent';
@@ -33,7 +33,7 @@ function App() {
           <NavBar />
           <Container className='main'>
             <Route exact path='/events' component={ Dashboard } />
-            <Route exact path='/sandbox' component={ Sandbox } />
+            {/*<Route exact path='/sandbox' component={ Sandbox } />*/}
             <Route path='/events/:id' component={ EventDetailView } />
             <PrivateRoute
               key={ key }
