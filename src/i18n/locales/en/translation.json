@@ -1,0 +1,41 @@
+{
+  "common": {
+    "appName": "React Events"
+  },
+  "event": {
+    "button": {
+      "view": ""
+    },
+    "hostedBy": ""
+  },
+  "form": {
+    "button": {
+      "cancel": ""
+    },
+    "field": {
+      "category": "",
+      "city": "",
+      "date": "",
+      "description": "",
+      "title": "",
+      "venue": ""
+    }
+  },
+  "homepage": {
+    "getStarted": "Get Started"
+  },
+  "navigation": {
+    "button": {
+      "createEvent": "Create Event"
+    },
+    "item": {
+      "account": "My Account",
+      "createEvent": "Create Event",
+      "events": "Events",
+      "login": "Login",
+      "profile": "My Profile",
+      "register": "Register",
+      "signOut": ""
+    }
+  }
+}
