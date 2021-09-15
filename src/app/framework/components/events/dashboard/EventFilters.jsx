@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter, setStartDate } from '../eventActions';
 import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 export default function EventFilters({ loading, currentUser }) {
   const { t } = useTranslation();
@@ -50,6 +51,7 @@ export default function EventFilters({ loading, currentUser }) {
         onChange={ date => dispatch(setStartDate(date)) }
         value={ startDate || new Date() }
         tileDisabled={ () => loading }
+        locale={ i18n.language || 'en' }
       />
     </>
   )
