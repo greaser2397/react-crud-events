@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import SignedOutMenu from './SignedOutMenu';
 import SignedInMenu from './SignedInMenu';
 import { useSelector } from 'react-redux';
+import LanguageSwitcher from './LanguageSwitcher';
 
 function NavBar() {
   const { t } = useTranslation();
@@ -32,6 +33,9 @@ function NavBar() {
             content={ t('navigation.item.createEvent', { defaultValue: 'Create Event' }) }
           />
         </Menu.Item> }
+        <Menu.Item position='right'>
+          <LanguageSwitcher />
+        </Menu.Item>
         { authenticated
           ? <SignedInMenu />
           : <SignedOutMenu />

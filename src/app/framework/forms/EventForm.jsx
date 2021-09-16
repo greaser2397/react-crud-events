@@ -31,6 +31,7 @@ function EventForm({ match, history, location }) {
   const dispatch = useDispatch();
   const { selectedEvent } = useSelector(state => state.event);
   const { loading, error } = useSelector(state => state.async);
+  const { prevLocation } = useSelector(state => state.auth);
   const categories = getCategoryData();
 
   useEffect(() => {
@@ -62,12 +63,20 @@ function EventForm({ match, history, location }) {
     date: Yup.string().required(),
   });
 
+  const handleCancelClick = () => {
+    return history && prevLocation ? history.push(prevLocation.pathname) : history.goBack();
+  };
+
   async function handleCancelToggle(event) {
     setConfirmToggleOpen(false);
     setLoadingCancel(true);
 
     try {
       await cancelEventToggle(event);
+      toast.success(event.isCancelled
+        ? t('form.message.eventReactivated', { defaultValue: 'Event was reactivated' })
+        : t('form.message.eventCancelled', { defaultValue: 'Event was cancelled' })
+      );
       setLoadingCancel(false);
     } catch (err) {
       setLoadingCancel(true);
@@ -81,11 +90,29 @@ function EventForm({ match, history, location }) {
 
     try {
       await deleteEventInFirestore(event.id);
+      toast.success(t('form.message.eventDeleted', { defaultValue: 'Event was deleted successfully' }));
       setLoadingDelete(false);
       history.push('/events')
     } catch (err) {
       setLoadingDelete(true);
       toast.error(err.message);
+    }
+  }
+
+  async function handleFormSubmit(values, { setSubmitting }) {
+    try {
+      if (selectedEvent) {
+        await updateEventInFirestore(values);
+        toast.success(t('form.message.eventUpdated', { defaultValue: 'Event was updated successfully' }));
+      } else {
+        await addEventToFirestore(values);
+        toast.success(t('form.message.eventCreated', { defaultValue: 'Event was created successfully' }));
+      }
+      setSubmitting(false);
+      history.push('/events');
+    } catch (err) {
+      toast.error(err.message);
+      setSubmitting(false);
     }
   }
 
@@ -107,19 +134,7 @@ function EventForm({ match, history, location }) {
         enableReinitialize
         initialValues={ defaultValues }
         validationSchema={ validationSchema }
-        onSubmit={ async (values, { setSubmitting }) => {
-          try {
-            selectedEvent
-              ? await updateEventInFirestore(values)
-              : await addEventToFirestore(values)
-            setSubmitting(false);
-            history.push('/events');
-
-          } catch (err) {
-            toast.error(err.message);
-            setSubmitting(false);
-          }
-        } }
+        onSubmit={ handleFormSubmit }
       >
         { ({ isSubmitting, dirty, isValid, values }) => (
           <Form className='ui form'>
@@ -207,7 +222,7 @@ function EventForm({ match, history, location }) {
               floated='right'
               disabled={ isSubmitting }
               content={ t('form.button.cancel', { defaultValue: 'Cancel' }) }
-              onClick={ history.goBack }
+              onClick={ handleCancelClick }
             />
           </Form>
         ) }

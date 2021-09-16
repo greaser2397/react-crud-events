@@ -1,4 +1,4 @@
-import { SIGN_IN_USER, SIGN_OUT_USER } from './authConstants';
+import { SIGN_IN_USER, SIGN_OUT_USER, SWITCH_LANGUAGE } from './authConstants';
 import firebase from '../../config/firebase';
 import { APP_LOADED } from '../../async/asyncReducer';
 import { dataFromSnapshot, getUserProfile } from '../../firestore/firestoreService';
@@ -33,5 +33,12 @@ export function verifyAuth() {
 export function signOutUser() {
   return {
     type: SIGN_OUT_USER
+  }
+}
+
+export function switchLanguage(lang) {
+  return {
+    type: SWITCH_LANGUAGE,
+    payload: lang
   }
 }

@@ -18,6 +18,7 @@ function EventHeader({ event, isGoing, isHost }) {
     setLoading(true);
     try {
       await addUserAttendance(event);
+      toast.info(t('event.message.joinedEvent', { defaultValue: 'You have subscribed for the current event' }))
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -29,6 +30,7 @@ function EventHeader({ event, isGoing, isHost }) {
     setLoading(true);
     try {
       await cancelUserAttendance(event);
+      toast.info(t('event.message.leftEvent', { defaultValue: 'You have unsubscribed from the current event' }))
     } catch (error) {
       toast.error(error.message);
     } finally {

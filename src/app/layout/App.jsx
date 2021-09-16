@@ -2,7 +2,7 @@ import React from 'react';
 import Dashboard from '../framework/pages/Dashboard';
 import NavBar from '../framework/components/nav/NavBar';
 import { Container } from 'semantic-ui-react';
-import Footer from '../framework/components/Footer';
+import Footer from '../framework/components/nav/Footer';
 import { Route, useLocation } from 'react-router-dom';
 import HomePage from '../framework/pages/HomePage';
 import EventDetailView from '../framework/pages/EventDetailView';

@@ -17,9 +17,9 @@ function EventListItem({ event }) {
             <Item.Content>
               <Item.Header content={ event.title } />
               <Item.Description>
-                <Link to={ `/profile/${ event.hostUid }` }>
-                  { `${ t('event.hostedBy', { defaultValue: 'Hosted by' }) } ${ event.hostedBy }` }
-                </Link>
+                { t('event.hostedBy', {
+                  defaultValue: 'Hosted by'
+                }) } <Link to={ `/profile/${ event.hostUid }` }>{ event.hostedBy }</Link>
               </Item.Description>
               { event.isCancelled && (
                 <Label

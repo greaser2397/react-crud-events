@@ -13,7 +13,7 @@ export default function UnauthModal({ history, setModalOpen }) {
   function handleClose() {
     if (!history) {
       setOpen(false);
-      setModalOpen(false);
+      setModalOpen && setModalOpen(false);
       return;
     }
     const location = history && prevLocation ? prevLocation.pathname : '/events';
@@ -25,7 +25,7 @@ export default function UnauthModal({ history, setModalOpen }) {
   function handleOpenLoginModal(modalType) {
     dispatch(openModal({ modalType }));
     setOpen(false);
-    setModalOpen(false);
+    setModalOpen && setModalOpen(false);
   }
 
   return (
@@ -38,7 +38,6 @@ export default function UnauthModal({ history, setModalOpen }) {
         content={ t('modal.message.unauthorized', { defaultValue: 'You need to be signed in to do that' }) }
       />
       <Modal.Content>
-        <p>Please either login or register to see this content</p>
         <p>{ t('modal.message.loginOrRegister', {
           defaultValue: 'Please either login or register to see this content'
         }) }</p>
