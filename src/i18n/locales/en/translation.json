@@ -75,6 +75,8 @@
       "attendeeGoing_plural": "{{count}} People Going",
       "cancelEvent": "This will cancel the selected event. Are you sure?",
       "deleteEvent": "This will delete the selected event. Are you sure?",
+      "joinedEvent": "You have subscribed for the current event",
+      "leftEvent": "You have unsubscribed from the current event",
       "reactivateEvent": "This will reactivate the selected event. Are you sure?"
     },
     "newsFeed": {
@@ -103,6 +105,11 @@
       "password": "Password"
     },
     "message": {
+      "eventCancelled": "Event was cancelled",
+      "eventCreated": "Event was created successfully",
+      "eventDeleted": "Event was deleted successfully",
+      "eventReactivated": "Event was reactivated",
+      "eventUpdated": "Event was updated successfully",
       "inconsistentPasswords": "Passwords do not match",
       "passwordRequired": "Password is required"
     }

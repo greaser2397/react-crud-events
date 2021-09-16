@@ -17,6 +17,18 @@
               margin-left: 0.5rem;
             }
           }
+
+          .lang-switcher {
+            .button {
+              &:nth-child(2) {
+                margin: 0;
+              }
+            }
+          }
+
+          + .item.right {
+            margin-left: 0 !important;
+          }
         }
       }
     }

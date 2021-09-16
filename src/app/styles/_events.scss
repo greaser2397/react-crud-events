@@ -14,3 +14,15 @@
     }
   }
 }
+
+.dashboard {
+  .ui.segments {
+    .ui.segment {
+      &.clearing {
+        .button {
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}
