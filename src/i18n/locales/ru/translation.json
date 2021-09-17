@@ -86,6 +86,9 @@
       "leftEvent": "отменил свое участие в"
     }
   },
+  "footer": {
+    "copyright": "© {{ year }} React Events. Все права защищены."
+  },
   "form": {
     "button": {
       "cancel": "Отменить",

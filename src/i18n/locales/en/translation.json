@@ -85,6 +85,9 @@
       "leftEvent": "has cancelled place on"
     }
   },
+  "footer": {
+    "copyright": "© {{ year }} React Events. All rights reserved."
+  },
   "form": {
     "button": {
       "cancel": "Cancel",
