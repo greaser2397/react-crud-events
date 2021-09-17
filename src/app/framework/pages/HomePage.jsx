@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Container, Header, Icon, Image, Segment } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../components/nav/LanguageSwitcher';
 
 function HomePage({ history }) {
   const { t } = useTranslation();
@@ -19,6 +20,9 @@ function HomePage({ history }) {
           { t('common.getStarted', { defaultValue: 'Get Started' }) }
           <Icon name='right arrow' inverted />
         </Button>
+        <div className='lang-switcher-wrapper'>
+          <LanguageSwitcher />
+        </div>
       </Container>
     </Segment>
   )

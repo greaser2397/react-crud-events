@@ -32,5 +32,19 @@
         }
       }
     }
+
+    &.footer {
+      min-height: auto;
+      margin: 0;
+
+      .container {
+        padding: 1rem 0;
+
+        p {
+          padding: 0 1rem;
+          color: #fff;
+        }
+      }
+    }
   }
 }

@@ -1,13 +1,19 @@
 import { Container, Menu } from 'semantic-ui-react';
-import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslation } from 'react-i18next';
 
 function Footer() {
+  const { t } = useTranslation();
+
   return (
-    <Menu inverted>
+    <Menu
+      className='footer'
+      inverted
+    >
       <Container>
-        <Menu.Item position='right'>
-          <LanguageSwitcher />
-        </Menu.Item>
+        <p>{ t('footer.copyright', {
+          year: new Date().getFullYear(),
+          defaultValue: '© {{ year }} React Events. All rights reserved.'
+        }) }</p>
       </Container>
     </Menu>
   )
