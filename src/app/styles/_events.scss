@@ -1,0 +1,28 @@
+.eventDetailView {
+  .eventHeader {
+    img {
+      filter: brightness(30%);
+    }
+
+    .imageText {
+      position: absolute;
+      bottom: 5%;
+      left: 5%;
+      width: 100%;
+      height: auto;
+      color: white;
+    }
+  }
+}
+
+.dashboard {
+  .ui.segments {
+    .ui.segment {
+      &.clearing {
+        .button {
+          margin-top: 1rem;
+        }
+      }
+    }
+  }
+}

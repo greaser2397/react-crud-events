@@ -1,0 +1,201 @@
+{
+  "account": {
+    "button": {
+      "toFacebook": "Перейти на Facebook",
+      "toGoogle": "Перейти в Google"
+    },
+    "header": {
+      "changePassword": "Поменять пароль",
+      "facebookAccount": "Аккаунт Facebook",
+      "googleAccount": "Аккаунт Google"
+    },
+    "message": {
+      "changePassword": "С помощью данной формы Вы можете сменить свой пароль",
+      "visitFacebook": "Пожалуйста, воспользуйтесь Facebook чтобы обновить ваш аккаунт",
+      "visitGoogle": "Пожалуйста, воспользуйтесь Google чтобы обновить ваш аккаунт"
+    }
+  },
+  "category": {
+    "culture": "Культура",
+    "drinks": "Напитки",
+    "film": "Кино",
+    "food": "Еда",
+    "music": "Музыка",
+    "travel": "Путешествия"
+  },
+  "common": {
+    "appName": "React Events",
+    "getStarted": "Начать",
+    "returnToEvents": "Вернуться на страницу мероприятий"
+  },
+  "errors": {
+    "default": "Ой-ой - кажется произошла ошибка",
+    "docNotFound": "Невозможно найти документ",
+    "invalidUsernameOrPass": "В логине или пароле допущена ошибка"
+  },
+  "event": {
+    "button": {
+      "hideMap": "Спрятать карту",
+      "joinEvent": "Принять участие",
+      "leaveEvent": "Отменить участие",
+      "manageEvent": "Редактировать",
+      "showMap": "Показать карту",
+      "view": "Подробнее"
+    },
+    "cancelledLabel": "Мероприятие отменено",
+    "chat": {
+      "textareaHint": "Пожалуйста, введите Ваш комментарий (ENTER для размещения комментария, SHIFT + ENTER для перехода на новую строку)"
+    },
+    "field": {
+      "category": "Категория",
+      "city": "Город",
+      "date": "Дата",
+      "description": "Описание",
+      "title": "Название",
+      "venue": "Место"
+    },
+    "filter": {
+      "allEvents": "Все мероприятия",
+      "calendarLabel": "Выберите дату",
+      "imGoing": "Я принимаю участие",
+      "imHosting": "Организованные мной",
+      "label": "Фильтры"
+    },
+    "header": {
+      "chatAboutEvent": "Чат по текущему мероприятию",
+      "details": "Детали мероприятия",
+      "locationDetails": "Место проведения",
+      "newsFeed": "Новостная лента",
+      "signInToComment": "Войдите для просмотра и добваления комментариев"
+    },
+    "hostedBy": "Организатор",
+    "loading": "Загрузка мероприятия...",
+    "message": {
+      "attendeeGoing_0": "Идёт {{count}} человек",
+      "attendeeGoing_1": "Идут {{count}} человека",
+      "attendeeGoing_2": "Идут {{count}} человек",
+      "cancelEvent": "Данное действие отменит текущее мероприятие. Вы уверены?",
+      "deleteEvent": "Данное действие удалит текущее мероприятие. Вы уверены?",
+      "joinedEvent": "Вы подписались на текущее мероприятие",
+      "leftEvent": "Вы отписались от текущего мероприятия",
+      "reactivateEvent": "Данное действие возобновит текущее мероприятие. Вы уверены?"
+    },
+    "newsFeed": {
+      "defaultMessage": "что-то произошло...",
+      "joinedEvent": "подписался на",
+      "leftEvent": "отменил свое участие в"
+    }
+  },
+  "footer": {
+    "copyright": "© {{ year }} React Events. Все права защищены."
+  },
+  "form": {
+    "button": {
+      "cancel": "Отменить",
+      "cancelEvent": "Отменить мероприятие",
+      "create": "Создать",
+      "deleteEvent": "Удалить мероприятие",
+      "login": "Вход",
+      "reactivateEvent": "Возобновить мероприятие",
+      "register": "Регистрация",
+      "update": "Обновить",
+      "updatePassword": "Обновить пароль"
+    },
+    "field": {
+      "confirmPassword": "Подтвердить пароль",
+      "displayName": "Отображаемое имя",
+      "email": "Эл. почта",
+      "newPassword": "Новый пароль",
+      "password": "Пароль"
+    },
+    "message": {
+      "eventCancelled": "Мероприятие отменено",
+      "eventCreated": "Мероприятие успешно создано",
+      "eventDeleted": "Мероприятие успешно удалено",
+      "eventReactivated": "Мероприятие возобновлено",
+      "eventUpdated": "Мероприятие успешно обновлено",
+      "inconsistentPasswords": "Пароли не совпадают",
+      "passwordRequired": "Пароль обязателен"
+    }
+  },
+  "modal": {
+    "button": {
+      "login": "Вход",
+      "register": "Регистрация"
+    },
+    "login": {
+      "header": "Вход в React Events"
+    },
+    "message": {
+      "continueAsGuest": "Или нажмите кнопку Отменить чтобы продолжить как гость",
+      "loginOrRegister": "Пожалуйста, войдите или зарегистрируйтесь для просмотра данного контента",
+      "registerInApp": "Регистрация в React Events",
+      "unauthorized": "Вы должны войти чтобы сделать это"
+    },
+    "social": {
+      "facebookLogin": "Логин через Facebook",
+      "googleLogin": "Логин через Google"
+    }
+  },
+  "navigation": {
+    "item": {
+      "account": "Мой аккаунт",
+      "createEvent": "Создать мероприятие",
+      "events": "Мероприятия",
+      "login": "Вход",
+      "profile": "Мой профиль",
+      "register": "Регистрация",
+      "signOut": "Выйти"
+    }
+  },
+  "profile": {
+    "button": {
+      "follow": "Подписаться",
+      "following": "Подписан(а)",
+      "notFollowing": "Не подписан(а)",
+      "unfollow": "Отписаться",
+      "updateProfile": "Обновить профиль"
+    },
+    "field": {
+      "description": "Описание",
+      "displayName": "Отображаемое имя"
+    },
+    "imageUploader": {
+      "hint": "Перенесите картинку сюда",
+      "step1": "Шаг 1 - Добавить фото",
+      "step2": "Шаг 2 - Изменить размер",
+      "step3": "Шаг 3 - Предпросмотр и загрузка"
+    },
+    "loading": "Загрузка профиля...",
+    "panes": {
+      "about": {
+        "cancelEdit": "Отмена",
+        "edit": "Редактировать",
+        "label": "О пользователе",
+        "memberSince": "Зарегистрирован с:"
+      },
+      "events": {
+        "future": "Будущие мероприятия",
+        "hosting": "Организованные",
+        "label": "Мероприятия",
+        "past": "Прошедшие мероприятия"
+      },
+      "followers": {
+        "label": "Подписчики"
+      },
+      "following": {
+        "label": "Подписки"
+      },
+      "photos": {
+        "cancelEdit": "Отменить",
+        "edit": "Добавить фото",
+        "label": "Фото",
+        "main": "Главн."
+      }
+    },
+    "stats": {
+      "followers": "Подписчики",
+      "following": "Подписки"
+    }
+  }
+}

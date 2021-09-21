@@ -17,6 +17,32 @@
               margin-left: 0.5rem;
             }
           }
+
+          .lang-switcher {
+            .button {
+              &:nth-child(2) {
+                margin: 0;
+              }
+            }
+          }
+
+          + .item.right {
+            margin-left: 0 !important;
+          }
+        }
+      }
+    }
+
+    &.footer {
+      min-height: auto;
+      margin: 0;
+
+      .container {
+        padding: 1rem 0;
+
+        p {
+          padding: 0 1rem;
+          color: #fff;
         }
       }
     }

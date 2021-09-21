@@ -11,10 +11,10 @@ i18n.use(initReactI18next).init({
   defaultNS: 'translations',
   resources: {
     en: {
-      translations: require('./locales/en/translations.json')
+      translations: require('./locales/en/translation.json')
     },
     ru: {
-      translations: require('./locales/ru/translations.json')
+      translations: require('./locales/ru/translation.json')
     }
   },
 });
